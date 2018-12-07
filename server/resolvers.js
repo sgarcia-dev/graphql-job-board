@@ -6,6 +6,14 @@ const Query = {
   jobs: () => db.jobs.list()
 };
 
+const Mutation = {
+  createJob: (root, args) => {
+    const { input } = args;
+    const id = db.jobs.create(input);
+    return db.jobs.get(id);
+  }
+};
+
 // Field Resolvers
 const Company = {
   jobs: parent => db.jobs.list().filter(job => job.companyId === parent.id)
@@ -17,6 +25,7 @@ const Job = {
 
 module.exports = {
   Query,
+  Mutation,
   Company,
   Job
 };
