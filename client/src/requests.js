@@ -1,9 +1,26 @@
 const endpointURL = "http://localhost:9000/graphql";
 
+export async function createJob(input) {
+  const { job } = await graphqlRequest({
+    query: `mutation CreateJob($input: CreateJobInput) {
+      job: createJob(input: $input) {
+        id
+        title
+        description
+        company {
+          id
+          name
+        }
+      }
+    }`,
+    variables: { input }
+  });
+  return job;
+}
+
 export async function loadCompany(id) {
   const data = await graphqlRequest({
-    query: `
-    query CompanyQuery($id: ID!) {
+    query: `query CompanyQuery($id: ID!) {
       company(id: $id) {
         id
         name
@@ -26,18 +43,17 @@ export async function loadCompany(id) {
 
 export async function loadJob(id) {
   const data = await graphqlRequest({
-    query: `
-      query JobQuery($id: ID!) {
-        job(id: $id) {
+    query: `query JobQuery($id: ID!) {
+      job(id: $id) {
+        id
+        title
+        description
+        company {
           id
-          title
-          description
-          company {
-            id
-            name
-          }
+          name
         }
-      }`,
+      }
+    }`,
     variables: { id }
   });
   return data.job;
