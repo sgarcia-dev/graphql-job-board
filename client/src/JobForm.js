@@ -14,10 +14,8 @@ export class JobForm extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    const TEMP_COMPANY_ID = "SJV0-wdOM";
     const { title, description } = this.state;
     createJob({
-      companyId: TEMP_COMPANY_ID,
       title,
       description
     }).then(job => {
