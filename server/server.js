@@ -6,6 +6,7 @@ const express = require("express");
 const expressJwt = require("express-jwt");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+const morgan = require("morgan");
 const db = require("./db");
 
 const port = 9000;
@@ -17,6 +18,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const app = express();
 app.use(
+  morgan('combined'),
   cors(),
   bodyParser.json(),
   expressJwt({
